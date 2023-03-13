@@ -3,7 +3,7 @@ Vanilla Ajax
 
 ## Ex1: 
 // full parameters
-
+```
 const axi1	= AJaxi({
 	contentType: 'json'
 	, data: {"miss": "mom"}
@@ -16,11 +16,11 @@ const axi1	= AJaxi({
 		console.log(responseJson)
 	}
 })
-
+```
 
 ## Ex2:
 // with some default parameter
-
+```
 const axi2	= AJaxi({
 	// default contentType value is json
 	data: {"miss": "mom"}
@@ -33,3 +33,4 @@ const axi2	= AJaxi({
 		console.log(responseJson)
 	}
 })
+```
