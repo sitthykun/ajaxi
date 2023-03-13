@@ -7,13 +7,14 @@ const AJaxi	=	(config) => {
 	//
     var xmlhttp;
 
-	//
+	// verify request library
 	if (window.XMLHttpRequest) {
-		//code for Firefox, Chrome, or Webkit
+		// Firefox, Chrome, or Webkit
 		xmlhttp	= new XMLHttpRequest()
 	}
+	// intridient engine
 	else {
-		//code for the old Internet Explorer
+		// the old Internet Explorer
 		xmlhttp	= new ActiveXObject('Microsoft.XMLHTTP')
 	}
 
@@ -50,12 +51,28 @@ const AJaxi	=	(config) => {
     }
 
 	// Get method
-	if (config.type != undefined && (config.type == 'get' || config.type == 'GET')) {
-		xmlhttp.open('GET', config.url, config.method)
+	if (config.type != undefined) {
+		
+		// POST method (frequency)
+		if (config.type.toString().toUpperCase() == 'POST')
+			xmlhttp.open('POST', config.url, config.method)
+
+		// DELETE method
+		else if (config.type.toString().toUpperCase() == 'DELETE')
+			xmlhttp.open('DELETE', config.url, config.method)
+		
+		// UPDATE method
+		else if (config.type.toString().toUpperCase() == 'UPDATE')
+			xmlhttp.open('UPDATE', config.url, config.method)
+		
+		// GET method or default
+		else
+			xmlhttp.open('GET', config.url, config.method)
+		
 	}
-	// Post method
+	// GET method or default
 	else {
-		xmlhttp.open('POST', config.url, config.method)
+		xmlhttp.open('GET', config.url, config.method)
 	}
 
 	// open then allow to set header
@@ -72,7 +89,7 @@ const AJaxi	=	(config) => {
 		// send out
 		xmlhttp.send(JSON.stringify(config.data))
 	}
-	// Form data
+	// form data
 	else if (config.contentType == 'form') {
 		xmlhttp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded')
 		// send out
