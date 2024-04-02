@@ -1,5 +1,5 @@
 # ajaxi
-Vanilla Ajax
+It's a vanilla Ajax and minified by https://jscompress.com/
 
 ## Ex1: 
 // full parameters
