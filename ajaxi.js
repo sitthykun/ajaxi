@@ -2,106 +2,102 @@
  * Author: masakokh
  * Year: 2022
  * Note: Main file
+ * Version: 1.0.0
  */
 const AJaxi	=	(config) => {
 	//
-    var xmlhttp;
+    let xmlHttp;
+    let httpMethod = {
+    	'DELETE': 'DELETE'
+    	, 'GET' : 'GET'
+    	, 'POST' : 'POST'
+    	, 'PUT': 'PUT'
+    }
 
 	// verify request library
-	if (window.XMLHttpRequest) {
+	if (window.XMLHttpRequest)
 		// Firefox, Chrome, or Webkit
-		xmlhttp	= new XMLHttpRequest()
-	}
+		xmlHttp	= new XMLHttpRequest()
+
 	// intridient engine
-	else {
+	else
 		// the old Internet Explorer
-		xmlhttp	= new ActiveXObject('Microsoft.XMLHTTP')
-	}
+		xmlHttp	= new ActiveXObject('Microsoft.XMLHTTP')
 
 	// configuration
-    if (!config.url) {
+    if (!config.url)
         return;
-    }
 
 	// method
-    if (!config.method) {
+    if (!config.method)
         config.method = true
-    }
 
 	//
-    xmlhttp.onreadystatechange = () => {
+    xmlHttp.onreadystatechange = () => {
         // loading
-    	if (xmlhttp.readyState == 3) {
+    	if (xmlHttp.readyState == 3) {
 			// loading
     	}
 
         // ready with status okay
-        if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+        if (xmlHttp.readyState == 4 && xmlHttp.status == 200)
         	// request finished
-            if (config.success) {
-                config.success(xmlhttp.responseText, xmlhttp.readyState)
-            }
-        }
+            if (config.success)
+                config.success(xmlHttp.responseText, xmlHttp.readyState)
+
         // error
-        else {
-            if (config.error) {
-                config.error(xmlhttp.statusText)
-            }
-        }
+        else
+            if (config.error)
+                config.error(xmlHttp.statusText)
     }
 
 	// Get method
-	if (config.type != undefined) {
-		
+	if (config.type != undefined)
 		// POST method (frequency)
-		if (config.type.toString().toUpperCase() == 'POST')
-			xmlhttp.open('POST', config.url, config.method)
+		if (config.type.toString().toUpperCase() == httpMethod.POST)
+			xmlHttp.open(httpMethod.POST, config.url, config.method)
 
 		// DELETE method
-		else if (config.type.toString().toUpperCase() == 'DELETE')
-			xmlhttp.open('DELETE', config.url, config.method)
+		else if (config.type.toString().toUpperCase() == httpMethod.DELETE)
+			xmlHttp.open(httpMethod.DELETE, config.url, config.method)
 		
-		// UPDATE method
-		else if (config.type.toString().toUpperCase() == 'UPDATE')
-			xmlhttp.open('UPDATE', config.url, config.method)
+		// PUT method
+		else if (config.type.toString().toUpperCase() == httpMethod.PUT)
+			xmlHttp.open(httpMethod.PUT, config.url, config.method)
 		
 		// GET method or default
 		else
-			xmlhttp.open('GET', config.url, config.method)
-		
-	}
+			xmlHttp.open(httpMethod.GET, config.url, config.method)
+
 	// GET method or default
-	else {
-		xmlhttp.open('GET', config.url, config.method)
-	}
+	else
+		xmlHttp.open(httpMethod.GET, config.url, config.method)
 
 	// open then allow to set header
-	if (config.header != undefined) {
-		for (var prop in config.header) {
-			xmlhttp.setRequestHeader(prop, config.header[prop])
-		}
-	}
+	if (config.header != undefined)
+		for (var prop in config.header)
+			xmlHttp.setRequestHeader(prop, config.header[prop])
 
 	// content type JSON
 	if (config.contentType == 'json') {
-		xmlhttp.setRequestHeader('Content-Type', 'application/json; charset=UTF-8')
-		xmlhttp.getResponseHeader('Content-type', 'application/json')
+		xmlHttp.setRequestHeader('Content-Type', 'application/json; charset=UTF-8')
+		xmlHttp.getResponseHeader('Content-type', 'application/json')
 		// send out
-		xmlhttp.send(JSON.stringify(config.data))
+		xmlHttp.send(JSON.stringify(config.data))
 	}
 	// form data
 	else if (config.contentType == 'form') {
-		xmlhttp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded')
+		xmlHttp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded')
 		// send out
-		xmlhttp.send(config.data)
+		xmlHttp.send(config.data)
 	}
-	// json
+	// default is json format
 	else {
 		// request
-		xmlhttp.setRequestHeader('Content-Type', 'application/json; charset=UTF-8')
+		xmlHttp.setRequestHeader('Content-Type', 'application/json; charset=UTF-8')
 		// response
-		xmlhttp.getResponseHeader('Content-type', 'application/json')
+		xmlHttp.getResponseHeader('Content-type', 'application/json')
 		// send out
-		xmlhttp.send(JSON.stringify(config.data))
+		xmlHttp.send(JSON.stringify(config.data))
 	}
 }
